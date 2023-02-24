@@ -14,7 +14,7 @@ import time
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.shortcuts import render
 import openai
-openai.api_key = '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'
+openai.api_key = ''
 
 class LargeResultsSetPagination(PageNumberPagination):
     page_size = 1000
