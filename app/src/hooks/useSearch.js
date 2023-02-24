@@ -6,7 +6,7 @@ function useSearch() {
 
   const handleSearchQ = event => {
     setSearchQ(event.target.value);
-    if(event.target.value !== ''){
+    if(event.target.value !== '' && event.target.value.length >= 2){
       APIservice.searchNews(event.target.value).then((result)=>{
       setSearchList(result)
     })}

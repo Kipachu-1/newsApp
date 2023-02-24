@@ -14,6 +14,8 @@ const SavedPage = () => {
   const [result, setResult] = useState([])
   const [Visible, setVisible] = useState(false)
 
+
+
   useEffect(()=>{
     if(SearchVisible || SVisible){
       setVisible(true)
@@ -21,6 +23,7 @@ const SavedPage = () => {
       setVisible(false)
     }
   }, [SearchVisible, SVisible])
+
   const {filteredList, searchTerm, handleSearch} = useFilter(savedNews)
   const {searchList, searchQ, handleSearchQ} = useSearch();
 
@@ -35,7 +38,8 @@ const SavedPage = () => {
 
   useEffect(()=>{
     if(SVisible && !SearchVisible){
-      DataManager.getSavedNews().then(data=>{setResult(data);});
+      DataManager.getSavedNews().then(data=>{setResult(data);
+      setSavedNews(data)});
     } else {
       setResult([])
     }
@@ -59,7 +63,7 @@ const SavedPage = () => {
     animate={{bottom:'0', top:'30px'}}
     exit={{bottom:'-110%', top:'110%'}}
     transition={{ duration: 0.5,type: "spring" }}
-
+    
      className='Save-page unselectable'>
           <div className='save-page-header' >
               <BackBtn style={{filter:'invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%)', transform:'rotate(270deg)'}}

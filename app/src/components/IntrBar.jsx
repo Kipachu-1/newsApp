@@ -14,7 +14,7 @@ const IntrBar = ({...props}) => {
     const handleInterest = (intr)=>{
         setInterested(intr)
         if(intr==='Trending'){
-          setCurInterest('')
+          setCurInterest('all')
         } else {
           setCurInterest(intr)
         }

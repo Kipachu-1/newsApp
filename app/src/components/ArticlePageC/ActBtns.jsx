@@ -7,10 +7,13 @@ import likeF from '../../static/icons/likeF.svg'
 
 import { motion } from 'framer-motion'
 import { DataManager } from '../../utilities/DataManager'
+import { APIservice } from '../../API/APIservice'
 const ActBtns = ({article_data}) => {
   const [inSaved, setInSaved] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [disabled, setDisabled] = useState(false)
+  const [disabled, setDisabled] = useState(false);
+  const [ldisabled, setlDisabled] = useState(false);
+
   useEffect(()=>{
     DataManager.inSavedNews(article_data).then(response=>{
       if(response){
@@ -19,23 +22,46 @@ const ActBtns = ({article_data}) => {
         setInSaved(false)
       }
     })
+    DataManager.inLikedArticles({UID:article_data.UID}).then(response=>{
+      if(response){
+        setLiked(true)
+      } else {
+        setLiked(false)
+      }
+    })
   }, [article_data])
+ 
+  const handleLike =()=>{
+    if(!ldisabled){
+      setlDisabled(true)
+    if(liked){
+      DataManager.updateLikedArticles('remove', {UID:article_data.UID})
+      setLiked(false)
+      APIservice.likeArticle(article_data.UID, 'remove')
+    } else {
+      DataManager.updateLikedArticles('add', {UID:article_data.UID})
+      setLiked(true)
+      APIservice.likeArticle(article_data.UID, 'add')
+    }
+  }
+  setTimeout(()=>{
+    setlDisabled(false)}, 2000)
+  }
   const handleSave =()=>{
     if(!disabled){
       setDisabled(true)
     if(inSaved){
       DataManager.updateSavedNews('remove', article_data)
       setInSaved(false)
+      APIservice.saveArticle(article_data.UID, 'remove')
     } else {
       DataManager.updateSavedNews('add', article_data)
       setInSaved(true)
+      APIservice.saveArticle(article_data.UID, 'add')
     }
   }
   setTimeout(()=>{
     setDisabled(false)}, 2000)
-  }
-  const handleLike =()=>{
-      setLiked(!liked)
   }
 
   return (

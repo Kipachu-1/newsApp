@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
-import { ArticleDataR, ArticleVisible } from '../../context/MainContex'
+import { ArticleDataR, ArticleVisible, AuthorPageVisible } from '../../context/MainContex'
 import { ArticleUtil } from '../../utilities/ArticleUtil'
 import AuthorInfo from './AuthorInfo'
 import CardBtns from './CardBtns'
@@ -15,7 +15,7 @@ const ArticleCard = ({article_data, ...props}) => {
     const ReadClick = ()=>{
         article_data.backColor = colors.backColor
         setArVisible(true);
-        setArticleData(article_data)
+        setArticleData(article_data);
     }
   return (
     <motion.div  whileTap={{scale:0.95}}
@@ -23,15 +23,17 @@ const ArticleCard = ({article_data, ...props}) => {
     <div className='article-card' onClick={ReadClick} style={{backgroundColor:colors.backColor}}>
         <div className='card-title'>
             <h1>
-                {article_data.title.substring(0, 47)}...
+                {article_data.title.length> 47?
+                article_data.title.substring(0, 47)+"...":
+                article_data.title}
             </h1>
         </div>
         <p className='card-updated-at'>
             {article_data?.updated}
         </p>
-        <AuthorInfo author_data={article_data?.author}/>
-        <div className='card-text'>
-            {article_data?.text.substring(0, 320)}...
+        <AuthorInfo author_data={article_data?.author} onClick={(e)=>{e.stopPropagation()}}/>
+        <div className='card-text' >
+        {article_data.text.substring(0, 320)}...
         </div>
     </div>
     <CardBtns article_data={{...article_data, backColor:colors.backColor}} btnColor={colors.filterColor}/>

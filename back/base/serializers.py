@@ -4,7 +4,9 @@ from . import models
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Author
-        fields = ['name']
+        fields = ['name', 'avatar']
+
+
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,4 +20,24 @@ class ArticleSerializer(serializers.ModelSerializer):
         model = models.Article
         fields = ['title', 'text', 'updated', 'created', 'author', 'pk', 'UID', 'images']
 
+class FullAuthorSerializer(serializers.ModelSerializer):
+    followers = serializers.IntegerField(source='subscriptions.count', read_only=True)
+    articles = ArticleSerializer(many=True)
+    class Meta:
+        model = models.Author
+        fields = ['name', 'avatar', 'followers', 'description', 'articles']
 
+class UserDataArticleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Article
+        fields = ['UID']
+
+class UserDataSerialiazer(serializers.ModelSerializer):
+    Subscriptions = AuthorSerializer(many=True)
+    SavedArticles = ArticleSerializer(many=True)
+    LikedArticles = UserDataArticleSerializer(many=True)
+    
+    class Meta:
+        model = models.UserData
+        fields = ['Subscriptions', 'SavedArticles', 'LikedArticles']
+    

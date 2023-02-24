@@ -5,5 +5,7 @@ export class DomUtil{
     static async setBackColor(color){
         document.body.style.setProperty('background-color', color)
     }
-    
+    static async setArticleFontColor(color){
+        document.querySelector('.article-page').style.color = color
+    }
 }

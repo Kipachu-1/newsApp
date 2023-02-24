@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "MetaNEWS",
+  "name": "MetaNEWS",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,11 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#111111",
-  "background_color": "#111111"
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "splash_screen": {
+    "name": "logo192.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  }
 }
